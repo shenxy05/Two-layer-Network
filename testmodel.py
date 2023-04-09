@@ -9,7 +9,7 @@ train_img, train_label, test_img, test_label = load_data(download=False,
                                                          normalize=True)
 # 导入模型
 network = NeuralNetwork.load("1.model")
-# 输出分类精度
+# 导出分类精度
 w1, w2, b1, b2 = network.get_params()
 
 # 每个隐藏层和所有输入层连接权重对应一个和输入图片一样28*28的灰度图片
@@ -27,6 +27,6 @@ x2 = plt.subplot(122)
 img2 = Image.fromarray(np.uint8(w2 * 255))
 plt.title('w2')
 plt.imshow(img2, cmap='gray')
-plt.savefig('网络参数可视化', dpi=200, bbox_index='tight')
+plt.savefig('网络参数可视化', dpi=200)
 plt.show()
 print("在测试集上预测的分类精度acc=", network.accuracy(test_img, test_label))
