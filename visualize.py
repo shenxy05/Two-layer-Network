@@ -9,7 +9,7 @@ train_img, train_label, test_img, test_label = load_data(download=False,
                                                          flatten=True,
                                                          normalize=True)
 network = NeuralNetwork(784, 150, 10, lr=1e-1, lamb_da=1e-5)  # 换成找到的最优参数
-epoch = 25
+epoch = 30
 train_loss = []
 test_loss = []
 test_acc = []
@@ -19,13 +19,13 @@ print("acc=", network.accuracy(test_img, test_label))
 for e in range(epoch):
     iter = np.arange(len(train_label))
     np.random.shuffle(iter)  # 随机选取样本计算梯度
-    batch_size = 70
+    batch_size = 100
     batch_index = np.arange(0, len(train_label) + 1, batch_size)
     count = 0
     for i in range(len(batch_index) - 1):
         index = iter[batch_index[i]:batch_index[i + 1]]
         network.update(train_img[index], train_label[index])
-        if i % 100 == 0:
+        if i % 10 == 0:
             train_loss.append(network.loss(train_img, train_label))
             test_loss.append(network.loss(test_img, test_label))
             test_acc.append(network.accuracy(test_img, test_label))
@@ -35,7 +35,7 @@ for e in range(epoch):
     else:
         network.lr_decay(0.9)
     print(network.accuracy(test_img, test_label))
-network.save('2.model')  # 保存模型
+network.save('1.model')  # 保存模型
 
 
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 显示中文
